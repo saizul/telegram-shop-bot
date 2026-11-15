@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      # Pass files explicitly: Node 22+ treats a bare directory argument as a glob pattern.
+      # SQLite tests skip themselves when node:sqlite is missing (Node 20).
+      - run: node --test dist/test/*.test.js
+      - name: Config check fails cleanly without secrets
+        run: |
+          set +e
+          node dist/src/main.js 2> err.txt
+          code=$?
+          cat err.txt
+          test "$code" = "1" && grep -q "TELEGRAM_BOT_TOKEN is required" err.txt
+
+  docker:
+    name: Docker image builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: telegram-shop-bot:ci

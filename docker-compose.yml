@@ -1,0 +1,47 @@
+# Example deployment. Copy .env.example to .env and fill it in first, and put your
+# catalogue at ./data/catalog.json (or use CATALOG_SOURCE=sheets).
+#
+#   docker compose up -d                   # the bot (BOT_MODE from .env: polling or webhook)
+#   docker compose --profile n8n up -d     # also start a local n8n for order automations
+
+services:
+  bot:
+    build: .
+    image: telegram-shop-bot:0.1.0
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /app/data
+      CATALOG_FILE: /app/data/catalog.json
+      PORT: "8080"
+    ports:
+      # Webhook mode: bind to localhost and let Caddy/Nginx terminate TLS on 443 and proxy here.
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - shop-data:/app/data
+      - ./data/catalog.json:/app/data/catalog.json:ro
+      # Google service account key, if you use Sheets (GOOGLE_SERVICE_ACCOUNT_FILE=/run/secrets/google-sa.json):
+      # - ./secrets/google-sa.json:/run/secrets/google-sa.json:ro
+    healthcheck:
+      # Polling mode has no HTTP server, so the check only probes /healthz in webhook mode.
+      test: ["CMD", "node", "-e", "if(process.env.BOT_MODE!=='webhook')process.exit(0);fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    environment:
+      GENERIC_TIMEZONE: Asia/Dhaka
+      TZ: Asia/Dhaka
+    ports:
+      - "127.0.0.1:5678:5678"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    profiles: ["n8n"]
+    # With this service, set N8N_WEBHOOK_URL=http://n8n:5678/webhook/shop-orders in .env
+
+volumes:
+  shop-data:
+  n8n-data:

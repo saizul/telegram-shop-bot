@@ -1,0 +1,5 @@
+id,category,name_en,name_bn,description_en,description_bn,price,sale_price,photo,stock,active,sort
+jamdani-red,saree,Dhakai Jamdani (red),ঢাকাই জামদানি (লাল),"Handwoven half-silk jamdani, with blouse piece.","হাতে বোনা হাফ সিল্ক জামদানি, ব্লাউজ পিসসহ।",6500,5900,https://images.example.com/products/jamdani-red.jpg,4,TRUE,1
+tangail-tant,saree,Tangail Tant cotton saree,টাঙ্গাইল তাঁতের সুতি শাড়ি,Soft everyday cotton saree.,নরম সুতির রোজকার শাড়ি।,1850,,https://images.example.com/products/tangail.jpg,12,TRUE,2
+sylhet-tea-500,tea,"Sylhet black tea, 500 g","সিলেটের কালো চা, ৫০০ গ্রাম",Strong CTC tea from Sreemangal.,শ্রীমঙ্গলের কড়া সিটিসি চা।,৳৩৫০,,,80,TRUE,3
+nakshi-kantha,craft,Nakshi Kantha (single),নকশি কাঁথা (সিঙ্গেল),Hand-stitched in Jamalpur.,জামালপুরে হাতে সেলাই করা।,3200,,,2,TRUE,4

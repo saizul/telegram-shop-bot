@@ -1,0 +1,14 @@
+node_modules/
+dist/
+data/
+secrets/
+coverage/
+*.log
+*.tgz
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.*
+!.env.example
+.DS_Store

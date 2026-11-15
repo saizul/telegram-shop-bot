@@ -1,0 +1,85 @@
+{
+  "categories": [
+    { "id": "saree", "name_en": "Sarees", "name_bn": "শাড়ি", "sort": 1 },
+    { "id": "panjabi", "name_en": "Panjabi", "name_bn": "পাঞ্জাবি", "sort": 2 },
+    { "id": "tea", "name_en": "Tea & Spices", "name_bn": "চা ও মসলা", "sort": 3 },
+    { "id": "craft", "name_en": "Handicrafts", "name_bn": "হস্তশিল্প", "sort": 4 }
+  ],
+  "products": [
+    {
+      "id": "jamdani-red",
+      "category": "saree",
+      "name_en": "Dhakai Jamdani (red)",
+      "name_bn": "ঢাকাই জামদানি (লাল)",
+      "description_en": "Handwoven half-silk jamdani from Rupganj, with blouse piece. 12 hands long.",
+      "description_bn": "রূপগঞ্জের হাতে বোনা হাফ সিল্ক জামদানি, ব্লাউজ পিসসহ। ১২ হাত লম্বা।",
+      "price": 6500,
+      "sale_price": 5900,
+      "photo": "https://images.example.com/products/jamdani-red.jpg",
+      "stock": 4
+    },
+    {
+      "id": "tangail-tant",
+      "category": "saree",
+      "name_en": "Tangail Tant cotton saree",
+      "name_bn": "টাঙ্গাইল তাঁতের সুতি শাড়ি",
+      "description_en": "Soft everyday cotton saree.",
+      "description_bn": "নরম সুতির রোজকার শাড়ি।",
+      "price": 1850,
+      "photo": "https://images.example.com/products/tangail.jpg",
+      "stock": 12
+    },
+    {
+      "id": "panjabi-cotton-m",
+      "category": "panjabi",
+      "name_en": "Cotton Panjabi (M)",
+      "name_bn": "সুতি পাঞ্জাবি (M)",
+      "description_en": "Breathable cotton, regular fit.",
+      "description_bn": "আরামদায়ক সুতি, রেগুলার ফিট।",
+      "price": 1450
+    },
+    {
+      "id": "panjabi-cotton-l",
+      "category": "panjabi",
+      "name_en": "Cotton Panjabi (L)",
+      "name_bn": "সুতি পাঞ্জাবি (L)",
+      "price": 1450
+    },
+    {
+      "id": "sylhet-tea-500",
+      "category": "tea",
+      "name_en": "Sylhet black tea, 500 g",
+      "name_bn": "সিলেটের কালো চা, ৫০০ গ্রাম",
+      "description_en": "Strong CTC tea from Sreemangal gardens.",
+      "description_bn": "শ্রীমঙ্গলের বাগানের কড়া সিটিসি চা।",
+      "price": "৳৩৫০",
+      "stock": 80
+    },
+    {
+      "id": "mustard-oil-1l",
+      "category": "tea",
+      "name_en": "Ghani mustard oil, 1 litre",
+      "name_bn": "ঘানি ভাঙা সরিষার তেল, ১ লিটার",
+      "price": 380,
+      "stock": 0
+    },
+    {
+      "id": "nakshi-kantha",
+      "category": "craft",
+      "name_en": "Nakshi Kantha (single)",
+      "name_bn": "নকশি কাঁথা (সিঙ্গেল)",
+      "description_en": "Hand-stitched in Jamalpur.",
+      "description_bn": "জামালপুরে হাতে সেলাই করা।",
+      "price": 3200,
+      "stock": 2
+    },
+    {
+      "id": "old-lantern",
+      "category": "craft",
+      "name_en": "Brass lantern",
+      "name_bn": "পিতলের হারিকেন",
+      "price": 900,
+      "active": false
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+/** Public API for embedding the shop bot in another Node.js application. */
+export { ShopBot, commandOf, type ShopBotConfig, type ShopBotDeps } from './bot/bot.js';
+export { createApp, main, type App } from './app.js';
+export { loadConfig, ConfigError, type AppConfig } from './config.js';
+export { HttpTelegramApi, TelegramApiError, type TelegramApi } from './telegram/api.js';
+export type * from './telegram/types.js';
+export { CatalogService } from './catalog/service.js';
+export { JsonCatalogSource, SheetsCatalogSource, parseCatalogObject } from './catalog/sources.js';
+export type { Catalog, CatalogSource, Category, Product } from './catalog/types.js';
+export { ServiceAccountAuth, parseServiceAccount } from './google/auth.js';
+export { GoogleSheetsClient, type SheetsClient } from './google/sheets.js';
+export { OrderEvents, type OrderEvent, type OrderEventSink } from './integrations/events.js';
+export { WebhookSink, signPayload } from './integrations/n8n.js';
+export { SheetsOrderSink, ORDER_COLUMNS } from './integrations/sheets-export.js';
+export { JsonStore } from './store/json.js';
+export { SqliteStore, openSqliteStore, hasNodeSqlite } from './store/sqlite.js';
+export type { Store } from './store/types.js';
+export { RateLimiter, type RateLimitConfig } from './security/rate-limit.js';
+export { normaliseBdPhone, type BdPhone } from './bd/phone.js';
+export { DISTRICTS, DIVISIONS, findDistrict } from './bd/districts.js';
+export { formatTaka } from './bd/money.js';
+export { createWebhookHandler, startWebhookServer, verifySecretToken } from './server/webhook.js';
+export { runPolling } from './server/polling.js';
+export type { Order, OrderStatus, Session, CartItem } from './shop/types.js';
