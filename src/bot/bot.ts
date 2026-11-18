@@ -56,6 +56,8 @@ interface Ctx {
 }
 
 const DEFAULT_CHECKOUT_TTL = 2 * 3600_000;
+/** Shorter free text is answered with the menu hint instead of a search. */
+const MIN_SEARCH_LENGTH = 2;
 
 /**
  * The shop bot. Feed it Telegram updates with `handleUpdate`; it talks back through the
@@ -271,6 +273,10 @@ export class ShopBot {
 
   private async onMessage(ctx: Ctx, msg: Message): Promise<void> {
     const cmd = commandOf(msg.text);
+    if (cmd === 'search') {
+      await this.search(ctx, commandArgs(msg.text));
+      return;
+    }
     if (cmd) {
       await this.onCommand(ctx, cmd);
       return;
@@ -285,7 +291,21 @@ export class ShopBot {
       await this.onCheckoutInput(ctx, msg);
       return;
     }
+    const text = (msg.text ?? '').trim();
+    if ([...text].length >= MIN_SEARCH_LENGTH) {
+      // Free text outside checkout is treated as a product search ("jamdani", "চা").
+      await this.search(ctx, text);
+      return;
+    }
     await this.send(ctx, { text: t(ctx.lang, 'unknown.text'), keyboard: V.menuKeyboard(ctx.lang, await this.cartCount(ctx)) });
+  }
+
+  private async search(ctx: Ctx, query: string): Promise<void> {
+    if ([...query.trim()].length < MIN_SEARCH_LENGTH) {
+      await this.send(ctx, { text: t(ctx.lang, 'search.usage') });
+      return;
+    }
+    await this.send(ctx, V.searchScreen(ctx.lang, query, await this.catalog.search(query)));
   }
 
   private async onCommand(ctx: Ctx, cmd: string): Promise<void> {
@@ -872,6 +892,12 @@ export class ShopBot {
 export function commandOf(text: string | undefined): string | undefined {
   const m = /^\/([a-z0-9_]{1,32})(?:@\w+)?(?:\s|$)/i.exec(text ?? '');
   return m ? m[1]!.toLowerCase() : undefined;
+}
+
+/** `/search@MyShopBot red saree` -> `red saree`. Empty for non-commands or commands without text. */
+export function commandArgs(text: string | undefined): string {
+  const m = /^\/[a-z0-9_]{1,32}(?:@\w+)?(?:\s+([\s\S]*))?$/i.exec(text ?? '');
+  return m?.[1]?.trim() ?? '';
 }
 
 type CompleteDraft = { name: string; phone: string; districtId: string; address: string; payment: PaymentMethod; bkashTrxId?: string };

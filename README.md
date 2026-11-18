@@ -20,6 +20,9 @@ token.
   account (JWT) and the Sheets `values` API directly.
 - **Inline keyboard shopping**: categories, paginated product lists, product cards with
   add/remove buttons, a cart with +/-/remove/clear.
+- **Product search**: `/search jamdani`, or simply send a product name. Matches every word
+  against names, descriptions, ids and category names in English and Bangla (Bangla digits
+  included), ranks name matches first and shows up to 10 results as buttons.
 - **Cart and sessions stored in SQLite** (`node:sqlite`, built into Node 22.13+) or a JSON file.
 - **Checkout built for Bangladesh**: name, mobile number with BD normalisation (`+880`, `880`,
   `01...`, Bangla digits, operator detection) or one-tap contact sharing, division and district
@@ -289,6 +292,7 @@ with a custom order event sink.
 |---------|--------------|
 | `/start` | welcome menu |
 | `/shop` | categories |
+| `/search WORDS` | find products by name, description or category; plain text outside checkout does the same |
 | `/cart` | cart |
 | `/orders` | last five orders with status |
 | `/language` | switch Bangla / English |
