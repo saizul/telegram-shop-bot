@@ -1,4 +1,5 @@
 import type { Logger } from '../logger.js';
+import { searchProducts } from './search.js';
 import type { Catalog, CatalogSource, Category, Product } from './types.js';
 
 export interface CatalogServiceOptions {
@@ -70,6 +71,12 @@ export class CatalogService {
 
   async productsIn(categoryId: string): Promise<Product[]> {
     return (await this.get()).products.filter((p) => p.active && p.categoryId === categoryId);
+  }
+
+  /** Active products matching `query`, best match first (see `searchProducts`). */
+  async search(query: string): Promise<Product[]> {
+    const c = await this.get();
+    return searchProducts(c.products, c.categories, query).map((r) => r.product);
   }
 
   /** Active product by id. */

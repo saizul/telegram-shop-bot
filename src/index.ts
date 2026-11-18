@@ -1,10 +1,11 @@
 /** Public API for embedding the shop bot in another Node.js application. */
-export { ShopBot, commandOf, type ShopBotConfig, type ShopBotDeps } from './bot/bot.js';
+export { ShopBot, commandArgs, commandOf, type ShopBotConfig, type ShopBotDeps } from './bot/bot.js';
 export { createApp, main, type App } from './app.js';
 export { loadConfig, ConfigError, type AppConfig } from './config.js';
 export { HttpTelegramApi, TelegramApiError, type TelegramApi } from './telegram/api.js';
 export type * from './telegram/types.js';
 export { CatalogService } from './catalog/service.js';
+export { searchProducts, normalizeSearchText, type SearchResult } from './catalog/search.js';
 export { JsonCatalogSource, SheetsCatalogSource, parseCatalogObject } from './catalog/sources.js';
 export type { Catalog, CatalogSource, Category, Product } from './catalog/types.js';
 export { ServiceAccountAuth, parseServiceAccount } from './google/auth.js';

@@ -97,6 +97,24 @@ export function categoryScreen(lang: Lang, category: Category, products: Product
   return { text, keyboard: inlineKeyboard(rows) };
 }
 
+/** Search results shown at most; the customer is asked to add a word when there are more. */
+export const SEARCH_RESULTS_SHOWN = 10;
+
+export function searchScreen(lang: Lang, query: string, products: Product[]): Screen {
+  const shown = products.slice(0, SEARCH_RESULTS_SHOWN);
+  const safeQuery = escapeHtml(truncate(query.trim(), 40));
+  const rows: InlineKeyboardButton[][] = shown.map((prod) => [
+    button(`${localized(prod.name, lang)} · ${money(unitPrice(prod), lang)}${prod.stock === 0 ? ' ✖' : ''}`, CB.product(prod.id)),
+  ]);
+  rows.push([button(t(lang, 'nav.categories'), CB.shop), button(t(lang, 'nav.cart'), CB.cart)]);
+  if (products.length === 0) {
+    return { text: t(lang, 'search.none', { query: safeQuery }), keyboard: inlineKeyboard(rows) };
+  }
+  let text = t(lang, 'search.results', { query: safeQuery, count: products.length });
+  if (products.length > shown.length) text += `\n${t(lang, 'search.more', { shown: shown.length })}`;
+  return { text, keyboard: inlineKeyboard(rows) };
+}
+
 export function productCaption(lang: Lang, product: Product): string {
   const name = `<b>${escapeHtml(localized(product.name, lang))}</b>`;
   const price =

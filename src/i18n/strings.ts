@@ -11,7 +11,7 @@ const en = {
   'start.welcome':
     '<b>Welcome to {shop}!</b>\n\nBrowse the catalogue, add products to your cart and order with cash on delivery or bKash.',
   'help.text':
-    '<b>How to order</b>\n1. Tap <b>Shop</b> and pick a category\n2. Open a product and tap <b>Add to cart</b>\n3. Open the cart and tap <b>Checkout</b>\n\nCommands:\n/shop: browse products\n/cart: your cart\n/orders: your recent orders\n/language: switch language\n/cancel: stop checkout',
+    '<b>How to order</b>\n1. Tap <b>Shop</b> and pick a category\n2. Open a product and tap <b>Add to cart</b>\n3. Open the cart and tap <b>Checkout</b>\n\nCommands:\n/shop: browse products\n/search WORD: find a product (or just send its name)\n/cart: your cart\n/orders: your recent orders\n/language: switch language\n/cancel: stop checkout',
   'menu.shop': '🛍 Shop',
   'menu.cart': '🛒 Cart ({count})',
   'menu.orders': '📦 My orders',
@@ -99,6 +99,10 @@ const en = {
   'rate.muted': 'You are sending messages too fast. Please wait {minutes} minutes.',
   'error.generic': 'Something went wrong. Please try again.',
   'unknown.text': 'Tap /shop to browse products or /help for help.',
+  'search.results': '<b>Results for “{query}”</b>\n{count} product(s) found. Tap one to open it.',
+  'search.more': 'Showing the first {shown}. Add another word to narrow the search.',
+  'search.none': 'No products match <b>{query}</b>.\nTap /shop to browse products or /help for help.',
+  'search.usage': 'Send a product name to search, for example <code>/search jamdani</code>, or just send <code>jamdani</code>.',
   'admin.only': 'Only shop admins can do this.',
   'admin.updated': 'Order {id}: {status}',
   'admin.badTransition': 'Order {id} is already {status}.',
@@ -111,7 +115,7 @@ const bn: Record<StringKey, string> = {
   'start.welcome':
     '<b>{shop}-এ স্বাগতম!</b>\n\nপণ্য দেখুন, কার্টে যোগ করুন এবং ক্যাশ অন ডেলিভারি বা বিকাশে অর্ডার করুন।',
   'help.text':
-    '<b>কীভাবে অর্ডার করবেন</b>\n১. <b>শপ</b> চাপুন এবং একটি ক্যাটাগরি বেছে নিন\n২. পণ্য খুলে <b>কার্টে যোগ করুন</b> চাপুন\n৩. কার্ট খুলে <b>চেকআউট</b> চাপুন\n\nকমান্ড:\n/shop: পণ্য দেখুন\n/cart: আপনার কার্ট\n/orders: সাম্প্রতিক অর্ডার\n/language: ভাষা পরিবর্তন\n/cancel: চেকআউট বাতিল',
+    '<b>কীভাবে অর্ডার করবেন</b>\n১. <b>শপ</b> চাপুন এবং একটি ক্যাটাগরি বেছে নিন\n২. পণ্য খুলে <b>কার্টে যোগ করুন</b> চাপুন\n৩. কার্ট খুলে <b>চেকআউট</b> চাপুন\n\nকমান্ড:\n/shop: পণ্য দেখুন\n/search শব্দ: পণ্য খুঁজুন (অথবা শুধু পণ্যের নাম পাঠান)\n/cart: আপনার কার্ট\n/orders: সাম্প্রতিক অর্ডার\n/language: ভাষা পরিবর্তন\n/cancel: চেকআউট বাতিল',
   'menu.shop': '🛍 শপ',
   'menu.cart': '🛒 কার্ট ({count})',
   'menu.orders': '📦 আমার অর্ডার',
@@ -196,6 +200,10 @@ const bn: Record<StringKey, string> = {
   'rate.muted': 'আপনি খুব দ্রুত মেসেজ পাঠাচ্ছেন। {minutes} মিনিট অপেক্ষা করুন।',
   'error.generic': 'কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।',
   'unknown.text': 'পণ্য দেখতে /shop অথবা সাহায্যের জন্য /help চাপুন।',
+  'search.results': '<b>“{query}” এর ফলাফল</b>\n{count}টি পণ্য পাওয়া গেছে। খুলতে একটিতে চাপুন।',
+  'search.more': 'প্রথম {shown}টি দেখানো হচ্ছে। আরও একটি শব্দ যোগ করে খোঁজ ছোট করুন।',
+  'search.none': '<b>{query}</b> নামে কোনো পণ্য পাওয়া যায়নি।\nপণ্য দেখতে /shop অথবা সাহায্যের জন্য /help চাপুন।',
+  'search.usage': 'খুঁজতে পণ্যের নাম পাঠান, যেমন <code>/search জামদানি</code>, অথবা শুধু <code>জামদানি</code> লিখে পাঠান।',
   'admin.only': 'শুধু শপ অ্যাডমিন এটি করতে পারবেন।',
   'admin.updated': 'অর্ডার {id}: {status}',
   'admin.badTransition': 'অর্ডার {id} ইতিমধ্যে {status}।',
@@ -232,6 +240,7 @@ export function allKeys(lang: Lang): string[] {
 export const COMMANDS: Record<Lang, Array<{ command: string; description: string }>> = {
   en: [
     { command: 'shop', description: 'Browse products' },
+    { command: 'search', description: 'Find a product' },
     { command: 'cart', description: 'Your cart' },
     { command: 'orders', description: 'Your recent orders' },
     { command: 'language', description: 'বাংলা / English' },
@@ -240,6 +249,7 @@ export const COMMANDS: Record<Lang, Array<{ command: string; description: string
   ],
   bn: [
     { command: 'shop', description: 'পণ্য দেখুন' },
+    { command: 'search', description: 'পণ্য খুঁজুন' },
     { command: 'cart', description: 'আপনার কার্ট' },
     { command: 'orders', description: 'সাম্প্রতিক অর্ডার' },
     { command: 'language', description: 'বাংলা / English' },
